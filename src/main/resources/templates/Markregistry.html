@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Mark Registry</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="https://www.ntc.edu/sites/default/files/styles/full_width_16_9/public/2021-06/software-development-specialist.jpg?itok=D8qgVwxb" type="image/png">
+
+    <script>
+      function addSubject() {
+        var subjectForm = document.createElement("div");
+
+        var subjectcodelabel = document.createElement("label");
+        subjectcodelabel.innerHTML = "Subject Code: ";
+        var subjectcodeinput = document.createElement("input");
+        subjectcodeinput.setAttribute("type", "text");
+        subjectcodeinput.setAttribute("name", "SubjectCode");
+
+        var subjecttitlelabel = document.createElement("label");
+        subjecttitlelabel.innerHTML = "Subject Title: ";
+        var subjecttitleinput = document.createElement("input");
+        subjecttitleinput.setAttribute("type", "text");
+        subjecttitleinput.setAttribute("name", "SubjectTitle");
+
+        subjectForm.appendChild(subjectcodelabel);
+        subjectForm.appendChild(subjectcodeinput);
+        subjectForm.appendChild(subjecttitlelabel);
+        subjectForm.appendChild(subjecttitleinput);
+        document.getElementById("subjectcontainer").appendChild(subjectForm);
+      }
+      function subjectFormController(event) {
+        event.preventDefault();
+        var objdata = {};	
+        objdata.Name = document.getElementById("name").value;
+        objdata.Registernumber =
+          document.getElementById("Registernumber").value;
+        objdata.Sem = document.getElementById("sem").value;
+        objdata.subjectcode = {};
+        const subjectCodes = document.getElementsByName("SubjectCode");
+        const subjectTitles = document.getElementsByName("SubjectTitle");
+        for (var i = 0; i < subjectCodes.length; i++) {
+          objdata.subjectcode[subjectCodes[i].value] = subjectTitles[i].value;
+        }
+		console.log(objdata);
+        fetch("/Getresult", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(objdata),
+		  
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+          });	
+      }
+    </script>
+  </head>
+  <body>
+    <div class="body">
+      <div class="mark-register">
+        <form onsubmit="subjectFormController(event)" th:action="@{/submit}" th:method="post">
+          <label for="name">Name </label>
+		  <br>
+          <input type="text" name="Name" id="name" th:value="${name}" required placeholder="Enter The Name" /><br />
+          <label for="Registernumber">Register No </label>
+		  <br>
+          <input type="number" name="Registernumber" id="Registernumber" th:value="${Registernumber}" placeholder="Enter The Registernumber" required /><br />
+          <label>Semester  </label>
+		  <br>
+          <input type="text" name="Sem" id="sem" th:value="${sem}" required  placeholder="Enter The Semester No"/><br />
+          <div id="subjectcontainer"></div>
+          <br />
+		  <label>Subjects </label>
+		  
+          <button type="button" onclick="addSubject()">Add Subject</button>
+          <br /><br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+	  <div id="boxcontainer"></div>
+    </div>
+	<script>
+		const boxcontainer = document.getElementById('boxcontainer');
+		const dynmaicboxgenerate =  () =>{
+			
+			 setInterval(()=>{
+				boxcontainer.innerHTML = ''; 	
+		for(let i = 0;i <= 3;i++){
+			let box = document.createElement("div");
+		
+			box.classList.add("box");
+			var size = Math.random()*200+20;
+			box.style.width = `${size}px`;
+			box.style.height = `${size}px`;
+			var position = Math.random()*2000-600;
+			box.style.marginLeft = `${position}px`;
+			box.style.zIndex = -1;
+			boxcontainer.appendChild(box);
+		}
+		},8000);
+		};
+		dynmaicboxgenerate();
+	</script>
+  </body>
+</html>
