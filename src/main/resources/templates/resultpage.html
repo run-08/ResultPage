@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V.S.B. Result Page</title>
+	<link
+	      rel="icon"
+	      href="VSB_LOGO.jpg"
+	      type="image/x-icon"
+	    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="result_page">
+      <img src= VSB_LOGO.jpg alt="VSB Logo" />
+      
+      <div class="nav_bar">
+        <button>Student's Profile</button>
+        <button>Int.Assessments</button>
+        <button>End Sem Results</button>
+        <button>Exam Registration</button>
+        <button>Open Elective Reg</button>
+      </div>
+
+      <div class="top_bar">
+        <div class="college_details">
+          <ol>
+            <li type="none"><h3>V.S.B ENGINEERING COLLEGE</h3></li>
+            <li type="none"><h5>(An Autonomous Institution)</h5></li>
+            <li type="none">
+              <h5>Approved by AICTE, Affiliated to Anna University</h5>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Dynamic Student Details using Thymeleaf -->
+        <div class="student_details">
+          <ol>
+            <li type="none"><span>User: <span th:text="${name}" class="name"></span></span></li>
+            <li type="none"><span>Register No: <span th:text="922522205014" class="reg" ></span></span></li>
+            <li type="none"><a href="/logout" title="Logout">LogOut</a></li>
+          </ol>
+        </div>
+      </div>
+ 
+      <div class="body_result_page">
+		<div class="sembox">Results Of </div>
+          <table>
+			<thead>
+				<tr>
+				<th>S.NO</th>
+				<th>Subject Code</th>
+				<th>Subject Title</th>
+				<th>Grade</th>
+				<th>Result</th>
+				<th>credit</th>
+				<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody class="table_body">
+		
+			</tbody>
+		  </table>
+      </div>
+    </div> 
+	<script>
+		const table_body = document.querySelector('.table_body');
+		window.onload = () =>{
+			const name = document.getElementsByName('name').value;
+			const registernumber = document.getElementsByName('reg').value;
+			fetch(`http://localhost:1001/Getresultmark${922522205014}`,{
+				method :"GET",
+				headers: {
+				           "Content-Type": "application/json",
+				         },
+			   
+			}).then((responsedata) => responsedata.json()).then((Data) =>{
+				console.log(Data);
+				if(Data && Object.keys(Data).length > 0){
+					Object.keys(Data).forEach((sequencenumber) =>{
+						const row = document.createElement("tr");
+						for(var i = 0;i < 7;i++){
+							console.log(sequencenumber);
+							if(sequencenumber == 'sem'){
+								document.querySelector('.sembox').innerHTML += Data[sequencenumber];
+							break;
+							}
+							if(sequencenumber == 'registernumber') break;
+							const column = document.createElement("td");
+							if(i == 0){
+								column.innerHTML = sequencenumber;
+								row.appendChild(column);
+								continue;
+							}
+							const arr = Data[sequencenumber];
+							column.innerHTML = arr[i-1];
+							row.appendChild(column);
+						}
+						table_body.appendChild(row);
+					})
+				}
+			})
+			
+		}
+	</script>
+  </body>
+</html>

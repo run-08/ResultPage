@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V.S.B. Result Page</title>
+	<link
+	      rel="icon"
+	      href="VSB_LOGO.jpg"
+	      type="image/x-icon"
+	    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="result_page">
+      <img src= VSB_LOGO.jpg alt="VSB Logo" />
+      
+      <div class="nav_bar">
+        <button>Student's Profile</button>
+        <button>Int.Assessments</button>
+        <button>End Sem Results</button>
+        <button>Exam Registration</button>
+        <button>Open Elective Reg</button>
+      </div>
+
+      <div class="top_bar">
+        <div class="college_details">
+          <ol>
+            <li type="none"><h3>V.S.B ENGINEERING COLLEGE</h3></li>
+            <li type="none"><h5>(An Autonomous Institution)</h5></li>
+            <li type="none">
+              <h5>Approved by AICTE, Affiliated to Anna University</h5>
+            </li>
+          </ol>
+        </div>
+
+
+        <div class="student_details">
+          <ol>
+            <li type="none"><span>User: <span th:text="${name}" } class="name"></span></span></li>
+            <li type="none"><span>Register No: <span th:text="922522205018" class="reg" ></span></span></li>
+            <li type="none"><a href="/logout" title="Logout">LogOut</a></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="body_result_page">
+		<div class="sembox">Results Of </div>
+          <table>
+			<thead>
+				<tr>
+				<th>S.NO</th>
+				<th>Subject Code</th>
+				<th>Name of The Course</th>
+				<th>Grade</th>
+				<th>Result</th>	
+				<th>credit</th>
+				<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody class="table_body">
+		
+			</tbody>
+		  </table>
+      </div>
+    </div> 
+	<script>
+		const table_body = document.querySelector('.table_body');
+		window.onload = () =>{
+			const registernumber = prompt("Enter The Register Number : ");
+			getResultPage(registernumber);
+		}
+		const getResultPage = (registernumber) => {
+			fetch(`http://localhost:1001/GetMarks${registernumber}`,{
+							method :"GET",
+							headers: {
+							           "Content-Type": "application/json",				         },
+						}).then((responsedata) => responsedata.json()).then((Data) =>{
+							document.querySelector(".name").innerHTML = Data.name;
+							document.querySelector(".reg").innerHTML = Data.registernumber;
+							document.querySelector(".sembox").innerHTML = `Results Of ${Data.sem}th Semester Examination`;
+							console.log(Data.registernumber);
+							console.log(Data.sem);
+							const tbody = document.querySelector("tbody");
+							var globalIdx = 0;
+						  for(let i  =0; Data.subjectcode.length != 0;i++){
+							const row = document.createElement('tr');
+							var col = document.createElement('td');
+							col.innerHTML = globalIdx++;
+							row.appendChild(col);
+							col = document.createElement('td');
+							col.innerHTML = Data.subjectcode.shift();
+							row.appendChild(col);				col = document.createElement('td');
+						    col.innerHTML = Data.nameofthecourse.shift();
+						   row.appendChild(col);
+						   col = document.createElement('td');
+						   col.innerHTML = Data.grade.shift();
+						   row.appendChild(col);
+						   col = document.createElement('td');
+						   col.innerHTML = Data.result.shift();
+						   row.appendChild(col);
+						   col = document.createElement('td');
+						   col.innerHTML = Data.credit.shift();
+						   row.appendChild(col);
+						   col = document.createElement('td');
+						   col.innerHTML = Data.gpa.shift();
+						   row.appendChild(col);	
+						   tbody.appendChild(row);
+						  } 
+						})	
+		}
+	</script>
+  </body>
+</html>

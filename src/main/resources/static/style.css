@@ -1,0 +1,146 @@
+body {
+  padding: 0px;
+  margin: 0.7px;
+}
+img {
+  position: absolute;
+  z-index: 2;
+  width: 180px;
+  margin-left: 4px;
+  height: 150px;
+  margin-top: 5px;
+  border-radius: 20px;
+}
+.nav_bar {
+  max-width: 300px;
+  max-height: 1000px;
+  width: 190px;
+  background-color: rgba(0, 128, 128, 0.836);
+  height: 670px;
+  position: absolute;
+  margin-left: 1px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 160px;
+}
+.nav_bar > button {
+  margin-top: 20px;
+  height: 40px;
+  width: 190px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid transparent;
+  border-bottom-color: white;
+  border-radius: 10px;
+  border-right-color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.nav_bar > button:hover {
+  color: teal;
+}
+.top_bar {
+  max-width: 1900px;
+  max-height: 300px;
+  background-color: rgba(0, 128, 128, 0.836);
+  position: absolute;
+  width: 1750px;
+  height: 110px;
+}
+.college_details > ol {
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+ol > li {
+  position: relative;
+  margin-top: -2px;
+  margin-left: 240px;
+}
+.student_details {
+  margin-left: 1200px;
+}
+.student_details > ol {
+  margin-top: -120px;
+}
+.student_details > ol > li {
+  margin-top: 1px;
+  padding: 10px;
+  color: white;
+  position: relative;
+}
+.student_details > ol > li > a {
+  text-decoration-color: white;
+  color: white;
+}
+
+.body_result_page {
+  width: 1545px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  height: 700px;
+  position: absolute;
+  margin-left: 200px;
+  margin-top: 120px;
+}
+.body_result_page > table{
+	margin-top : 100px;
+	margin-left : 150px;
+	border-right: 1px solid grey;
+	border-collapse: collapse;
+	width : 1200px;
+	position: relative;
+	height : 300px;
+	border-bottom : 1px solid grey;
+}
+.body_result_page > table > thead{
+	border-right: 1px solid grey;
+	font-weight: bold;
+	background-color:#bbbb;
+	text-align: center;
+	position: relative;
+	height : 50px;
+}
+.body_result_page > table > tbody{
+	/*background-color: aliceblue;*/
+	border : 1px solid black;
+	position: relative;
+}
+.body_result_page > table > tbody > tr{
+	padding : 10px;
+	border : 1px solid navajowhite;
+	margin : 10px;
+	position: relative;
+	border-right : 1px solid grey;
+}
+.body_result_page > table > tbody > tr > td{
+	/*border : 1px solid  grey;*/	
+	text-align: center;
+	border-bottom : 1px solid grey;
+	border-left : 1px solid grey;
+	font-weight:600;
+}
+.body_result_page > table > 
+.student_details > img {
+  /* position: relative; */
+  height: 100px;
+  width: 100px;
+  margin-top: 15px;
+  position: absolute;
+  margin-left: 150px;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+.sembox{
+	text-align: center;
+	padding : 10px;
+	position: absolute;
+	margin-top : 60px;
+	margin-left : 150px;
+	background-color: darkorchid;
+	width : 1180px;
+}
